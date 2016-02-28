@@ -9,7 +9,7 @@ USER_AGENT = "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.13) Gecko/2010120
 
 def initialize_browser():
 
-    browser = RoboBrowser(history=True, user_agent=USER_AGENT)
+    browser = RoboBrowser(history=True, user_agent=USER_AGENT, parser='html.parser')
     return browser
     
 def do_login(browser, email, password):
