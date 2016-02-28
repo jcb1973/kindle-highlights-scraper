@@ -1,6 +1,6 @@
 # kindle-highlights-scraper
 
-Really simple Kindle highlights scraper using Robobrowser that just dumps highlights as plain text to stdout
+Really simple Kindle highlights scraper using [Robobrowser](https://github.com/jmcarp/robobrowser) that just dumps highlights as plain text to stdout
 
 Usage:
 
