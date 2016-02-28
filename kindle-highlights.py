@@ -33,20 +33,19 @@ def get_highlights_for_book_with_id(book_id):
 		highlights = browser.find_all('div', class_=["highlightRow", "bookMain"])
 		book_counter = 0
 		for highlight in highlights:
-			if highlight.has_key('class'):	
-				if highlight['class'][0] == "bookMain":
-					book_counter = book_counter + 1
-					# check we've not loaded up another book
-					if book_counter > 1:
-						break
-					title = highlight.find('span', class_='title')
-					author = highlight.find('span', class_='author')
-				if highlight['class'][0] == "highlightRow":
-					# text is in a span
-					t = highlight.find('span', class_="highlight")
-					print (title.text + " " + author.text + " " + t.text + "\n")
-			else:
-				print ("div without class")
+				
+			if highlight['class'][0] == "bookMain":
+				book_counter = book_counter + 1
+				# check we've not loaded up another book
+				if book_counter > 1:
+					break
+						
+				title = highlight.find('span', class_='title')
+				author = highlight.find('span', class_='author')
+			if highlight['class'][0] == "highlightRow":
+				# text is in a span
+				t = highlight.find('span', class_="highlight")
+				print (title.text + " " + author.text + " " + t.text + "\n")
 
 def get_books_from_page(books_link):
 
