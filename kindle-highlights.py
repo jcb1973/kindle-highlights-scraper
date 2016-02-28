@@ -32,14 +32,12 @@ def get_highlights_for_book_with_id(book_id):
 	else:
 		highlights = browser.find_all('div', class_=["highlightRow", "bookMain"])
 		book_counter = 0
-		for highlight in highlights:
-				
+		for highlight in highlights:				
 			if highlight['class'][0] == "bookMain":
 				book_counter = book_counter + 1
 				# check we've not loaded up another book
 				if book_counter > 1:
-					break
-						
+					break					
 				title = highlight.find('span', class_='title')
 				author = highlight.find('span', class_='author')
 			if highlight['class'][0] == "highlightRow":
@@ -56,7 +54,7 @@ def get_books_from_page(books_link):
 		# the last part of the URL is the book id
 		id = re.search('^.*/(.*)$', book['href'])
 		# not sure how Amazon like scrapers, so...
-		time.sleep(3)
+		#time.sleep(3)
 		get_highlights_for_book_with_id(id.group(1))
 
 #
@@ -68,18 +66,17 @@ password = sys.argv[2]
 browser  = initialize_browser()
 browser = do_login(browser, username, password)
 
-# get books from the first page
 first_books_link = browser.get_link('Your Books')
+browser.follow_link(first_books_link)
+
+# first grab the pagination links - we'll need them in a minute
+pagination_data = browser.find_all('div',attrs={'class':'yourReadingPaginationWrapper'})
+pagination_links = pagination_data[0].find_all('a', text=re.compile('\d'))
+
+# get books from the first page
 get_books_from_page(first_books_link)
 
-# then find the pagination links and get the books for each of them    
-data = browser.find_all('div',attrs={'class':'yourReadingPaginationWrapper'})
-# just grab the links which are a number
-pagination_links = data[0].find_all('a', text=re.compile('\d'))
-
+# then go through the pagination links
 for link in pagination_links:
 	print (link['href'])
 	get_books_from_page(link)
-	
-
-
