@@ -27,7 +27,6 @@ def get_highlights_for_book_with_id(book_id):
 	
 	no_highlights_check = browser.find('h1', text='No Highlights')
 	if no_highlights_check is not None:
-		print ("No highlights for " + book_id)
 		return
 	else:
 		highlights = browser.find_all('div', class_=["highlightRow", "bookMain"])
@@ -76,5 +75,4 @@ get_books_from_page(first_books_link)
 
 # then go through the pagination links
 for link in pagination_links:
-	print (link['href'])
 	get_books_from_page(link)
