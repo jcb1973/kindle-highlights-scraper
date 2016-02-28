@@ -44,7 +44,7 @@ def get_highlights_for_book_with_id(book_id):
 				t = highlight.find('span', class_="highlight")
 				print (title.text + " " + author.text + " " + t.text + "\n")
 
-def get_books_from_page(books_link):
+def get_highlights_for_books_on_page(books_link):
 
 	browser.follow_link(books_link)
 	books = browser.find_all('a', href=re.compile('/work/*'))
@@ -63,16 +63,16 @@ password = sys.argv[2]
 browser  = initialize_browser()
 browser = do_login(browser, username, password)
 
-first_books_link = browser.get_link('Your Books')
-browser.follow_link(first_books_link)
+first_page_of_books_link = browser.get_link('Your Books')
+browser.follow_link(first_page_of_books_link)
 
 # first grab the pagination links - we'll need them in a minute
 pagination_data = browser.find_all('div',attrs={'class':'yourReadingPaginationWrapper'})
 pagination_links = pagination_data[0].find_all('a', text=re.compile('\d'))
 
 # get books from the first page
-get_books_from_page(first_books_link)
+get_highlights_for_books_on_page(first_page_of_books_link)
 
 # then go through the pagination links
-for link in pagination_links:
-	get_books_from_page(link)
+for pagination_link in pagination_links:
+	get_highlights_for_books_on_page(pagination_link)
