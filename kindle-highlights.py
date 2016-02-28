@@ -67,8 +67,8 @@ first_page_of_books_link = browser.get_link('Your Books')
 browser.follow_link(first_page_of_books_link)
 
 # first grab the pagination links - we'll need them in a minute
-pagination_data = browser.find('div',attrs={'class':'yourReadingPaginationWrapper'})
-pagination_links = pagination_data.find_all('a', text=re.compile('\d'))
+pagination_div = browser.find('div',attrs={'class':'yourReadingPaginationWrapper'})
+pagination_links = pagination_div.find_all('a', text=re.compile('\d'))
 
 # get books from the first page
 get_highlights_for_books_on_page(first_page_of_books_link)
