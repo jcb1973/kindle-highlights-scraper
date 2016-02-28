@@ -42,7 +42,7 @@ def get_highlights_for_book_with_id(book_id):
 			if highlight['class'][0] == "highlightRow":
 				# text is in a span
 				t = highlight.find('span', class_="highlight")
-				print (title.text + " " + author.text + " " + t.text + "\n")
+				print (title.text.strip() + " || " + re.sub('^by ','', author.text.strip()) + " || " + t.text.strip())
 
 def get_highlights_for_books_on_page(books_link):
 
