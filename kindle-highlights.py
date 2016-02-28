@@ -30,20 +30,21 @@ def get_highlights_for_book_with_id(book_id):
 		print ("No highlights for " + book_id)
 		return
 	else:
-		# print title and author
 		highlights = browser.find_all('div', class_=["highlightRow", "bookMain"])
 		book_counter = 0
 		for highlight in highlights:
-			if highlight.has_key('class'):
-				# check we've not loaded up another book
+			if highlight.has_key('class'):	
 				if highlight['class'][0] == "bookMain":
 					book_counter = book_counter + 1
+					# check we've not loaded up another book
 					if book_counter > 1:
 						break
+					title = highlight.find('span', class_='title')
+					author = highlight.find('span', class_='author')
 				if highlight['class'][0] == "highlightRow":
 					# text is in a span
 					t = highlight.find('span', class_="highlight")
-					print (t.text + "\n")
+					print (title.text + " " + author.text + " " + t.text + "\n")
 			else:
 				print ("div without class")
 
@@ -55,7 +56,7 @@ def get_books_from_page(books_link):
 	for book in books:
 		# the last part of the URL is the book id
 		id = re.search('^.*/(.*)$', book['href'])
-		print (id.group(1))
+		# not sure how Amazon like scrapers, so...
 		time.sleep(3)
 		get_highlights_for_book_with_id(id.group(1))
 
