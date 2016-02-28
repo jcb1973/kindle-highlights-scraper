@@ -53,8 +53,6 @@ def get_books_from_page(books_link):
 	for book in books:
 		# the last part of the URL is the book id
 		id = re.search('^.*/(.*)$', book['href'])
-		# not sure how Amazon like scrapers, so...
-		#time.sleep(3)
 		get_highlights_for_book_with_id(id.group(1))
 
 #
