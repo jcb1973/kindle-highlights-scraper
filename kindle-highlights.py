@@ -27,6 +27,7 @@ def get_highlights_for_book_with_id(book_id):
 	
 	no_highlights_check = browser.find('h1', text='No Highlights')
 	if no_highlights_check is not None:
+		print (book_id + " || No highlights")
 		return
 	else:
 		highlights = browser.find_all('div', class_=["highlightRow", "bookMain"])
@@ -42,7 +43,9 @@ def get_highlights_for_book_with_id(book_id):
 			if highlight['class'][0] == "highlightRow":
 				# text is in a span
 				t = highlight.find('span', class_="highlight")
-				print (title.text.strip() + " || " + re.sub('^by ','', author.text.strip()) + " || " + t.text.strip())
+				print (book_id + " || " + title.text.strip() + " || " \
+						+ re.sub('^by ','', author.text.strip()) \
+						+ " || " + t.text.strip())
 
 def get_highlights_for_books_on_page(books_link):
 
@@ -50,6 +53,7 @@ def get_highlights_for_books_on_page(books_link):
 	books = browser.find_all('a', href=re.compile('/work/*'))
 
 	for book in books:
+		time.sleep(2)
 		# the last part of the URL is the book id
 		id = re.search('^.*/(.*)$', book['href'])
 		get_highlights_for_book_with_id(id.group(1))
@@ -75,4 +79,5 @@ get_highlights_for_books_on_page(first_page_of_books_link)
 
 # then go through the pagination links
 for pagination_link in pagination_links:
+	time.sleep(3)
 	get_highlights_for_books_on_page(pagination_link)
